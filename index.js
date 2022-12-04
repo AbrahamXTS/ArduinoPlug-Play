@@ -17,7 +17,7 @@ arduino.on("ready", () => {
 	const potentiometer = new Sensor("A5");
 
 	prevButton.on("down", () => {
-		keyTap("audio_prev");
+		keyTap("1");
 	});
 
 	pauseButton.on("down", () => {
@@ -25,14 +25,13 @@ arduino.on("ready", () => {
 	});
 
 	nextButton.on("down", () => {
-		keyTap("audio_next");
+		keyTap("2");
 	});
 
 	let level;
 	let prevLevel = 0;
 
 	const changeVolume = (volumeLevel) => {
-
 		if (volumeLevel - prevLevel !== 0) {
 			console.log("El nivel de volumen actual es de ", volumeLevel);
 			setVolume(volumeLevel);
