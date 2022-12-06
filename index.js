@@ -2,20 +2,23 @@ import RB from "robotjs";
 import LD from "loudness";
 import JF from "johnny-five";
 
-const { keyTap } = RB;
-const { setVolume } = LD;
-const { Board, Button, Sensor } = JF;
+const { keyTap } = RB; // Librería que servirá para manejar el teclado físico.
+const { setVolume } = LD; // Librería que servirá para manejar el volumen del dispositivo.
+const { Board, Button, Sensor } = JF; // Librería que servirá para configurar las señales recibidas del Arduino.
 
 const arduino = new Board();
 
 arduino.on("ready", () => {
 
+	// Configuramos los pines correspondientes a los botones.
 	const prevButton = new Button(8);
 	const pauseButton = new Button(9);
 	const nextButton = new Button(10);
 
+	// Configuramos el pin A5 para el potenciometro.
 	const potentiometer = new Sensor("A5");
 
+	// Seteamos la acción que realizarán los botones fisicos al hacer click sobre ellos.
 	prevButton.on("down", () => {
 		keyTap("1");
 	});
@@ -31,15 +34,18 @@ arduino.on("ready", () => {
 	let level;
 	let prevLevel = 0;
 
+	// Función que cambiará el volumen al nivel recibido por parametro.
 	const changeVolume = (volumeLevel) => {
 		if (volumeLevel - prevLevel !== 0) {
-			console.log("El nivel de volumen actual es de ", volumeLevel);
 			setVolume(volumeLevel);
+			console.log("El nivel de volumen actual es de ", volumeLevel);
 		}
 
+		// Variable auxiliar para verificar el cambio efectivo de nivel de volumen.
 		prevLevel = volumeLevel;
 	};
 
+	// Seteamos que en el evento de cambio del potenciometro realizará la función dada.
 	potentiometer.on("change", () => {
 
 		const { value } = potentiometer;
