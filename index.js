@@ -21,7 +21,7 @@ arduino.on("ready", () => {
 	});
 
 	pauseButton.on("down", () => {
-		keyTap("audio_pause");
+		keyTap("3");
 	});
 
 	nextButton.on("down", () => {
